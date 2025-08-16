@@ -6,6 +6,7 @@ import { history } from './entities/history.entity';
 import { Repository } from 'typeorm';
 import { HistoryDto } from './dto/history.dto';
 import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
+import { error } from 'console';
 
 @Injectable()
 export class HistoryService {
@@ -37,6 +38,34 @@ export class HistoryService {
         {
           status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'Could not create history',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async GetHistoryByid(id: number) {
+    if (!id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'invalid data',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    try {
+      return this.historRepository.findOne({
+        where: {
+          id: id,
+        },
+      });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.INTERNAL_SERVER_ERROR,
+          error: err.message as string,
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
