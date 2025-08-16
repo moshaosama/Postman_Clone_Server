@@ -10,9 +10,6 @@ Backend server for a **Postman Clone** project built with **NestJS**, **TypeORM*
 
 ## Fun Animated GIFs
 
-![Studying Programmer](https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif)  
-*This guy is "studying" your backend like a boss!*
-
 ![Coding Animation](https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif)  
 *Your Postman Clone backend working hard behind the scenes!*
 
