@@ -11,6 +11,7 @@ describe('HistoryController', () => {
   const MockFunctions = {
     getHistories: jest.fn(),
     CreateHistory: jest.fn(),
+    GetHistoryByid: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -60,5 +61,18 @@ describe('HistoryController', () => {
     MockFunctions.CreateHistory.mockResolvedValue(resolvedData);
     const result = await controller.createHistory(createHistory);
     expect(result).toEqual(resolvedData);
+  });
+
+  it('should be get a history by id', async () => {
+    const id: number = 6;
+    const resolvedValue = {
+      id: 6,
+      method: 'Get',
+      url: 'https://jsonplaceholder.typicode.com/posts',
+    };
+    MockFunctions.GetHistoryByid.mockResolvedValue(resolvedValue);
+
+    const result = await controller.GetHistoryByid(id);
+    expect(result).toEqual(resolvedValue);
   });
 });
