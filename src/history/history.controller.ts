@@ -79,4 +79,31 @@ export class HistoryController {
   public createHistory(@Body() createHistoryDto: CreateHistoryDto) {
     return this.historyService.CreateHistory(createHistoryDto);
   }
+
+  @Get(':id')
+  @ApiProperty({
+    title: 'Get History By id',
+    description: 'Get History by id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Success get history by id',
+    example: {
+      id: 1,
+      method: 'GET',
+      url: 'https://jsonplaceholder.typicode.com/posts',
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Data is required',
+    example: {
+      status: 'not found',
+      message: 'Invalid data',
+    },
+  })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async GetHistoryByid(@Param('id') id: number) {
+    return this.historyService.GetHistoryByid(id as number);
+  }
 }
