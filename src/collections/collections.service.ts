@@ -30,4 +30,20 @@ export class CollectionsService {
 
     return this.collectionModel.create(newCollection);
   }
+
+  async GetCollections() {
+    const results = this.collectionModel.find();
+
+    if ((await results).length === 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Not Found Data',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return results;
+  }
 }
