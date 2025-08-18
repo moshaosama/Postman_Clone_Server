@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { HistoryModule } from './history/history.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { history } from './history/entities/history.entity';
+import { CollectionsModule } from './collections/collections.module';
+import { collection } from './collections/entities/collection.entity';
 
 @Module({
   imports: [
@@ -15,8 +17,9 @@ import { history } from './history/entities/history.entity';
       username: 'root',
       password: '',
       synchronize: true,
-      entities: [history],
+      entities: [history, collection],
     }),
+    CollectionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
