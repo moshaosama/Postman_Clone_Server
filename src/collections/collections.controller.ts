@@ -41,4 +41,42 @@ export class CollectionsController {
   createHistory(createCollectionDTO: CreateCollectionDto) {
     return this.collectionsService.CreateHistory(createCollectionDTO);
   }
+
+  @Get()
+  @ApiProperty({
+    title: 'get all collections',
+    description: 'get all collections you founded in DB',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'success get all collections in db',
+    examples: {
+      example1: {
+        summary: 'Get request Collections',
+        value: {
+          title: 'PostMan_Clone',
+          history_id: 1,
+        },
+      },
+      example2: {
+        summary: 'Get request 2 from DB',
+        value: {
+          title: 'New Collections',
+          history_id: 2,
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Data is not found',
+    example: {
+      status: 'not found',
+      message: 'Invalid data',
+    },
+  })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  getCollections() {
+    return this.collectionsService.GetCollections();
+  }
 }
