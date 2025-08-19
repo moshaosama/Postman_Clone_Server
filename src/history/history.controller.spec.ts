@@ -39,11 +39,14 @@ describe('HistoryController', () => {
         id: 1,
         method: 'GET',
         url: 'http://localhost:3000/api/history',
+        collection_id: 1,
       },
     ];
+
+    const Collection_id: number = 1;
     MockFunctions.getHistories.mockResolvedValue(Histories);
 
-    const result = await controller.getHistories();
+    const result = await controller.getHistories(Collection_id);
     expect(result).toEqual(Histories);
   });
 
@@ -51,11 +54,13 @@ describe('HistoryController', () => {
     const createHistory: CreateHistoryDto = {
       method: 'Get',
       url: 'http://localhost:3000/api/history',
+      collection_id: 1,
     };
     const resolvedData: HistoryDto = {
       id: 1,
       method: 'GET',
       url: 'http://localhost:3000/api/history',
+      collection_id: 1,
     };
 
     MockFunctions.CreateHistory.mockResolvedValue(resolvedData);
