@@ -1,5 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { history } from 'src/history/entities/history.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class collection {
@@ -10,7 +11,9 @@ export class collection {
   @IsString()
   title: string;
 
-  @Column()
-  @IsNumber()
-  history_id: number;
+  @OneToMany(() => history, (history) => history.collection_id, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  history: history[];
 }
