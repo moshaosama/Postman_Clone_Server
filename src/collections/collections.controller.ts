@@ -38,7 +38,7 @@ export class CollectionsController {
     },
   })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  createHistory(createCollectionDTO: CreateCollectionDto) {
+  createHistory(@Body() createCollectionDTO: CreateCollectionDto) {
     return this.collectionsService.CreateHistory(createCollectionDTO);
   }
 
