@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { HistoryDto } from './dto/history.dto';
 import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
 import { error } from 'console';
+import { collection } from 'src/collections/entities/collection.entity';
 
 @Injectable()
 export class HistoryService {
@@ -14,15 +15,20 @@ export class HistoryService {
     @InjectRepository(history) private historRepository: Repository<history>,
   ) {}
 
-  async getHistories(): Promise<HistoryDto[]> {
-    return this.historRepository.find();
+  async getHistories(collection_id: number) {
+    return await this.historRepository.find({
+      where: {
+        collection_id: { id: collection_id },
+      },
+    });
   }
 
   async CreateHistory(createHistoryDto: CreateHistoryDto) {
     if (
       !createHistoryDto ||
       !createHistoryDto.method ||
-      !createHistoryDto.url
+      !createHistoryDto.url ||
+      !createHistoryDto.collection_id
     ) {
       throw new HttpException(
         { status: HttpStatus.BAD_REQUEST, error: 'Invalid data' },
@@ -31,7 +37,11 @@ export class HistoryService {
     }
 
     try {
-      const newHistory = this.historRepository.create(createHistoryDto);
+      const newHistory = this.historRepository.create({
+        method: createHistoryDto.method,
+        url: createHistoryDto.url,
+        collection_id: createHistoryDto.collection_id as any,
+      });
       return await this.historRepository.save(newHistory);
     } catch (error) {
       throw new HttpException(
