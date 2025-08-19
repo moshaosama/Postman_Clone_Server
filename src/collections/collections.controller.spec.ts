@@ -22,7 +22,6 @@ describe('CollectionsController', () => {
 
   it('should be create a new collections', async () => {
     const newcollection: CreateCollectionDto = {
-      history_id: 1,
       title: 'Postman_clone',
     };
 
