@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { history } from './history/entities/history.entity';
 import { CollectionsModule } from './collections/collections.module';
 import { collection } from './collections/entities/collection.entity';
+import { TabsModule } from './tabs/tabs.module';
+import { tabs } from './tabs/entities/tab.entity';
 
 @Module({
   imports: [
@@ -17,9 +19,10 @@ import { collection } from './collections/entities/collection.entity';
       username: 'root',
       password: '',
       synchronize: true,
-      entities: [history, collection],
+      entities: [history, collection, tabs],
     }),
     CollectionsModule,
+    TabsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
