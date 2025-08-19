@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { collection } from 'src/collections/entities/collection.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class history {
@@ -10,4 +17,8 @@ export class history {
 
   @Column()
   url: string;
+
+  @ManyToOne(() => collection, (collection) => collection.history)
+  @JoinColumn({ name: 'collection_id' })
+  collection_id: collection;
 }
