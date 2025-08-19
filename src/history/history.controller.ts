@@ -1,23 +1,13 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { ApiBody, ApiProperty, ApiResponse } from '@nestjs/swagger';
-import { history } from './entities/history.entity';
-import { HistoryDto } from './dto/history.dto';
 import { CreateHistoryDto } from './dto/create-history.dto';
 
 @Controller('history')
 export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}
 
-  @Get()
+  @Get('collection/:collection_id')
   @ApiProperty({
     title: 'History',
     description: 'Get All History',
@@ -42,8 +32,8 @@ export class HistoryController {
   @ApiResponse({ status: 400, description: 'Invalid query parameters' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  public async getHistories() {
-    return this.historyService.getHistories();
+  public async getHistories(@Param('collection_id') collection_id: number) {
+    return this.historyService.getHistories(collection_id);
   }
 
   @Post()
@@ -55,6 +45,7 @@ export class HistoryController {
         value: {
           method: 'GET',
           url: 'http://localhost:3000/api/history',
+          collection_id: '1',
         },
       },
     },
@@ -92,6 +83,7 @@ export class HistoryController {
       id: 1,
       method: 'GET',
       url: 'https://jsonplaceholder.typicode.com/posts',
+      collection_id: '1',
     },
   })
   @ApiResponse({
