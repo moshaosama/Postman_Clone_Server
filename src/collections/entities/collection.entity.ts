@@ -1,5 +1,5 @@
-import { IsNumber, IsString } from 'class-validator';
-import { history } from 'src/history/entities/history.entity';
+import { IsString } from 'class-validator';
+import { history } from '../../history/entities/history.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
