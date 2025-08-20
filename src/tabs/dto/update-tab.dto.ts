@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateTabDto } from './create-tab.dto';
+import { IsString } from 'class-validator';
 
-export class UpdateTabDto extends PartialType(CreateTabDto) {}
+export class UpdateTabDto {
+  @IsString()
+  url?: string;
+
+  @IsString()
+  method?: string;
+}

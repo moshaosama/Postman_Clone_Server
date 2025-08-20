@@ -1,10 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { tabs } from './entities/tab.entity';
 import { Repository } from 'typeorm';
 import { CreateTabDto } from './dto/create-tab.dto';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { error } from 'console';
+import { UpdateTabDto } from './dto/update-tab.dto';
 
 @Injectable()
 export class TabsService {
@@ -58,5 +62,51 @@ export class TabsService {
     await this.tabsModel.delete(id);
 
     return { status: 'success', message: 'Deleted Successfully' };
+  }
+
+  async GetTabsById(id: number) {
+    if (!id) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'id is required',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const result = await this.tabsModel.find({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!result) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_IMPLEMENTED,
+          error: 'data is not found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return result;
+  }
+
+  async UpdateTabs(id: number, updateTabsDTO: UpdateTabDto) {
+    const result = await this.tabsModel.findOne({
+      where: { id: id },
+    });
+
+    if (!result) {
+      throw new NotFoundException(`result with ID ${id} not found`);
+    }
+
+    Object.assign(result, {
+      method: updateTabsDTO.method ?? result?.method,
+      url: updateTabsDTO.url ?? result?.url,
+    });
+    return this.tabsModel.save(result);
   }
 }

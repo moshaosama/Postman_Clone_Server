@@ -1,13 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateHistoryDto } from './dto/create-history.dto';
-import { UpdateHistoryDto } from './dto/update-history.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { history } from './entities/history.entity';
 import { Repository } from 'typeorm';
-import { HistoryDto } from './dto/history.dto';
-import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
-import { error } from 'console';
-import { collection } from 'src/collections/entities/collection.entity';
 
 @Injectable()
 export class HistoryService {

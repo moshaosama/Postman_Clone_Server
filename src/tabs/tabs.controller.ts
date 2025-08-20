@@ -1,6 +1,7 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { TabsService } from './tabs.service';
 import { ApiProperty, ApiResponse } from '@nestjs/swagger';
+import { UpdateTabDto } from './dto/update-tab.dto';
 
 @Controller('tabs')
 export class TabsController {
@@ -88,5 +89,64 @@ export class TabsController {
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async deleteTabs(@Param('id') id: number): Promise<any> {
     return this.tabsService.Deletetabs(id);
+  }
+
+  @Get(':id')
+  @ApiProperty({
+    title: 'Get Tab By id',
+    description: 'get tab by id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'get all tab successfully',
+    example: {
+      id: 32,
+      method: 'GET',
+      url: 'Untitled Request',
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Not found',
+    example: {
+      status: 'not found',
+      message: 'Not found id',
+    },
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async getTabById(@Param('id') id: number) {
+    return this.tabsService.GetTabsById(id);
+  }
+
+  @Put(':id')
+  @ApiProperty({
+    title: 'Update Tab By id',
+    description: 'Update tab by id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Updated tab successfully',
+    example: {
+      id: 32,
+      method: 'GET',
+      url: 'Mosha Updated',
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Not found',
+    example: {
+      status: 'not found',
+      message: 'Not found id',
+    },
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async UpdateTabs(
+    @Param('id') id: number,
+    @Body() updateTabDto: UpdateTabDto,
+  ) {
+    return await this.tabsService.UpdateTabs(id, updateTabDto);
   }
 }
