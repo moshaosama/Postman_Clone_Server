@@ -1,6 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
-import { collection } from 'src/collections/entities/collection.entity';
+import { IsString } from 'class-validator';
+import { collection } from '../../collections/entities/collection.entity';
 
 export class CreateHistoryDto {
   @IsString()
