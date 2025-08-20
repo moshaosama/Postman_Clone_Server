@@ -6,12 +6,12 @@ import { CreateHistoryDto } from './dto/create-history.dto';
 
 describe('HistoryController', () => {
   let controller: HistoryController;
-  let service: HistoryService;
 
   const MockFunctions = {
     getHistories: jest.fn(),
     CreateHistory: jest.fn(),
     GetHistoryByid: jest.fn(),
+    save: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -26,7 +26,6 @@ describe('HistoryController', () => {
     }).compile();
 
     controller = module.get<HistoryController>(HistoryController);
-    service = module.get<HistoryService>(HistoryService);
   });
 
   afterEach(() => {
